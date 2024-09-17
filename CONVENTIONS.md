@@ -1,157 +1,371 @@
-# Conventions for DotNetExtensions.OAuth20 Project
+# Coding and Formatting Conventions for DotNetExtensions.OAuth20
 
-This document outlines the coding, naming, and formatting conventions that all contributors must follow when contributing to the DotNetExtensions.OAuth20 project. Currently, these agreements must be followed manually. However, in the future (during the **Setup CI/CD Workflows** milestone), we will introduce configuration files for popular linters and IDEs (like Visual Studio 2022, Visual Studio Code, Rider) and automate validation for commits and pull requests via GitHub workflows.
+Consistency in code style and formatting enhances readability and maintainability of the project. This document outlines the conventions to be followed when contributing to the DotNetExtensions.OAuth20 project.
 
 ## Table of Contents
-- [Coding Standards](#coding-standards)
-  - [Naming Conventions](#naming-conventions)
-  - [General Coding Style](#general-coding-style)
-  - [Formatting Rules](#formatting-rules)
-- [Commit Messages](#commit-messages)
-- [Branching Strategy](#branching-strategy)
-- [Testing Guidelines](#testing-guidelines)
-- [Documentation](#documentation)
-- [Security Best Practices](#security-best-practices)
+
+- [General Guidelines](#general-guidelines)
+- [Naming Conventions](#naming-conventions)
+  - [Quick Reference Table](#quick-reference-table)
+  - [Namespaces](#namespaces)
+  - [Classes, Abstract Classes and Interfaces](#classes-abstract-classes-and-interfaces)
+  - [Methods and Asynchronous Methods](#methods-and-asynchronous-methods)
+  - [Variables and Fields](#variables-and-fields)
+  - [Constants](#constants)
+- [Formatting Rules](#formatting-rules)
+  - [Indentation](#indentation)
+  - [Newlines](#newlines)
+  - [Braces](#braces)
+  - [Spacing](#spacing)
+- [Comments and Documentation](#comments-and-documentation)
+- [Example Code](#example-code)
 - [Future Automation](#future-automation)
+- [Use of Linters and Tools](#use-of-linters-and-tools)
 
 ---
 
-## Coding Standards
+## General Guidelines
 
-The following conventions are to be followed manually until the setup of CI/CD workflows where automatic validation will be integrated.
+- Adhere to the conventions outlined in this document to maintain consistency across the codebase.
+- Until automation is in place, adherence relies on individual contributors to follow these guidelines.
 
-### Naming Conventions
+## Naming Conventions
 
-We follow the official [Microsoft Naming Guidelines](https://learn.microsoft.com/en-us/dotnet/standard/design-guidelines/general-naming-conventions) and [Style Rules](https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/style-rules/naming-rules). Here’s a summary of the naming conventions to be manually adhered to:
+### Quick Reference Table
 
-- **Classes & Interfaces**: Use `PascalCase`. Interfaces should start with an `I` (e.g., `ILogger`, `OAuthService`).
-- **Methods & Properties**: Use `PascalCase` (e.g., `GetUserData`, `ValidateToken`).
-- **Variables & Parameters**: Use `camelCase` (e.g., `userName`, `tokenValue`).
-- **Fields**: Private fields should start with an underscore (e.g., `_cache`, `_logger`).
-- **Abbreviations**: Abbreviations in identifiers should be written with only the first letter capitalized (e.g., `XmlParser`, `HttpClient`). If multiple abbreviations are used, each follows the same rule (e.g., `XmlHttpClient`).
+| Item                  | Convention                    | Example                    |
+|-----------------------|-------------------------------|----------------------------|
+| Namespace             | PascalCase                    | `DotNetExtensions.OAuth20` |
+| Class                 | PascalCase                    | `AuthorizationServer`      |
+| Abstract Class        | PascalCase + Base             | `AuthorizationServerBase`  |
+| Interface             | I + PascalCase                | `IAuthorizationProvider`   |
+| Method                | PascalCase                    | `ValidateToken()`          |
+| Asynchronous Method   | PascalCase + Async            | `ValidateTokenAsync()`     |
+| Public Property       | PascalCase                    | `AccessToken`              |
+| Private Field         | _camelCase                    | `_tokenService`            |
+| Local Variable        | camelCase                     | `tokenResponse`            |
+| Constant              | PascalCase                    | `DefaultTimeout`           |
+| Enum                  | PascalCase                    | `TokenType`                |
+| Enum Members          | PascalCase                    | `Bearer`, `Mac`            |
 
-### General Coding Style
+### Namespaces
 
-We follow the **Allman style** for braces, where opening braces are placed on a new line. This applies to both code blocks (like methods) and declaration blocks (like classes). For now, this rule must be manually enforced by all contributors.
+- Use **PascalCase** for namespaces.
+- Namespaces should reflect the project structure.
+
+**Correct:**
 
 ```csharp
-if (condition) 
+namespace DotNetExtensions.OAuth20.Services
 {
-    // code block
+    // Code here
 }
 ```
 
-For method definitions:
+**Incorrect:**
 
 ```csharp
-public void SomeMethod()
+namespace dotnetextensions.oauth20.services
 {
-    // method code
+    // Code here
 }
 ```
 
-For class declarations:
+### Classes, Abstract Classes and Interfaces
+
+- **Classes**: Use **PascalCase**.
+- **Abstract Classes**: Postfix `Base` following **PascalCase**.
+- **Interfaces**: Prefix with `I` followed by **PascalCase**.
+
+**Correct:**
 
 ```csharp
-public class SomeClass
+public class TokenValidator
 {
-    public void SomeMethod()
+    // Code here
+}
+
+public abstract class TokenBuilderBase
+{
+    // Code here
+}
+
+public interface ITokenProvider
+{
+    // Code here
+}
+```
+
+**Incorrect:**
+
+```csharp
+public class tokenvalidator
+{
+    // Code here
+}
+
+public abstract class TokenBuilder
+{
+    // Code here
+}
+
+public interface Tokenprovider
+{
+    // Code here
+}
+```
+
+### Methods and Asynchronous Methods
+
+- Use **PascalCase** for method names.
+- Method names should be descriptive and use verb-noun phrases.
+- Postfix `Async` following a method name for asynchronous methods.
+
+**Correct:**
+
+```csharp
+public void GenerateAccessToken()
+{
+    // Code here
+}
+
+public async Task GenerateAccessTokenAsync()
+{
+    // Code here
+}
+```
+
+**Incorrect:**
+
+```csharp
+public void generateaccesstoken()
+{
+    // Code here
+}
+
+public async Task GenerateAccessToken()
+{
+    // Code here
+}
+```
+
+### Variables and Fields
+
+- **Private Fields**: Use `_camelCase` with an underscore prefix.
+- **Local Variables and Parameters**: Use **camelCase**.
+
+**Correct:**
+
+```csharp
+private readonly ITokenService _tokenService;
+
+public void AuthenticateUser(string username)
+{
+    var accessToken = _tokenService.GetToken(username);
+}
+```
+
+**Incorrect:**
+
+```csharp
+private readonly ITokenService TokenService;
+
+public void AuthenticateUser(String Username)
+{
+    var AccessToken = TokenService.GetToken(Username);
+}
+```
+
+### Constants
+
+- Use **PascalCase** for constants.
+
+**Correct:**
+
+```csharp
+public const int DefaultTimeout = 30;
+```
+
+**Incorrect:**
+
+```csharp
+public const int DEFAULT_TIMEOUT = 30;
+```
+
+## Formatting Rules
+
+### Indentation
+
+- Use **4 spaces** for indentation.
+- Do not use tabs.
+
+**Correct:**
+
+```csharp
+if (isValid)
+{
+    ProcessRequest();
+}
+```
+
+**Incorrect:**
+
+```csharp
+if (isValid)
+  {
+  ProcessRequest();
+  }
+```
+
+### Newlines
+
+- Use a newline between stereotype members and logical blocks of code.
+- Use CRLF (Carriage Return + Line Feed) as the line ending format.
+
+**Correct:**
+
+```csharp
+private readonly ICredentialsService _credentialsService;
+
+public JwtTokenBuilder(ICredentialsService credentialsService)
+{
+    _credentialsService = credentialsService;
+}
+```
+
+**Incorrect:**
+
+```csharp
+private readonly ICredentialsService _credentialsService;
+public JwtTokenBuilder(ICredentialsService credentialsService)
+{
+    _credentialsService = credentialsService;
+}
+```
+
+### Braces
+
+- Use **Allman style** braces (braces on a new line).
+
+**Correct:**
+
+```csharp
+public void Validate()
+{
+    // Code here
+}
+```
+
+**Incorrect:**
+
+```csharp
+public void Validate() {
+    // Code here
+}
+```
+
+### Spacing
+
+- Place a single space after keywords and before parentheses.
+- Do not place spaces inside parentheses.
+
+**Correct:**
+
+```csharp
+if (condition)
+{
+    // Code here
+}
+```
+
+**Incorrect:**
+
+```csharp
+if(condition){
+    // Code here
+}
+```
+
+## Comments and Documentation
+
+- Use XML documentation comments for public members.
+- Write comments in clear and concise English.
+
+**Example:**
+
+```csharp
+/// <summary>
+/// Generates a new access token for the specified user.
+/// </summary>
+/// <param name="username">The username of the user.</param>
+/// <returns>A new access token.</returns>
+public string GenerateAccessToken(string username)
+{
+    // Code here
+}
+```
+
+## Example Code
+
+Below is an example that incorporates the conventions:
+
+**Correct:**
+
+```csharp
+namespace DotNetExtensions.OAuth20.Server.TokenBuilders
+{
+    public class JwtTokenBuilder : TokenBuilderBase
     {
-        // method code
+        private readonly ICredentialsService _credentialsService;
+
+        public JwtTokenBuilder(ICredentialsService credentialsService)
+        {
+            _credentialsService = credentialsService;
+        }
+
+        public override async Task<string> GenerateAccessTokenAsync(TokenContext context)
+        {
+            if (condition)
+            {
+                // Code here
+            }
+        }
     }
 }
 ```
 
-### Formatting Rules
-
-- **Indentation**: Use 4 spaces for indentation (no tabs).
-- **Max Line Length**: Limit lines to 120 characters.
-- **Newlines**: Use a newline after method signatures and between logical blocks of code.
-- **Error Handling**: Use `try-catch` blocks for error handling and always log meaningful messages when an exception occurs.
-- **Line Endings (CRLF)**: Use `CRLF` (Carriage Return + Line Feed) as the line ending format, ensuring consistency across platforms. Configure your IDE to always use CRLF for this project.
+**Incorrect:**
 
 ```csharp
-try 
-{
-    // code
-} 
-catch (Exception ex) 
-{
-    _logger.LogError(ex, "Error processing request.");
-    throw;
+namespace dotnetextensions.oauth20.server.tokenbuilders{
+  public class JWT_TokenBuilder : TokenBuilder{
+    private readonly ICredentialsService credentialsService;
+
+    public JWT_TokenBuilder(ICredentialsService CredentialsService){
+      credentialsService = CredentialsService;
+    }
+
+    public override async Task<string> generateAccessToken(TokenContext _context){
+      if(condition){
+        // Code here
+      }
+    }
+  }
 }
 ```
-
----
-
-## Commit Messages
-
-Commit messages should follow the format below and will eventually be validated automatically, but for now, this process is manual.
-
-- Format: `[scope] #issue_number Description`
-- Ensure the commit messages are clear and concise.
-
-```plaintext
-[feature] #15 Implement OAuth token refresh mechanism
-```
-
----
-
-## Branching Strategy
-
-We follow the [GitFlow](./GITFLOW.md) branching strategy for managing features, bug fixes, and releases. All merges into `main` and `develop` should be done through pull requests only that have been reviewed and approved. This will be manually enforced until CI/CD workflows are in place.
-
----
-
-## Testing Guidelines
-
-- Write unit tests for all new code.
-- Use the format `MethodName_StateUnderTest_ExpectedBehavior` for test names.
-
-```csharp
-[Fact]
-public void ValidateToken_ValidToken_ReturnsTrue()
-{
-    // Arrange
-    // Act
-    // Assert
-}
-```
-
----
-
-## Documentation
-
-- Use XML comments for all public methods, properties, and classes.
-- Keep all documentation files up-to-date as features evolve.
-
----
-
-## Security Best Practices
-
-- Always validate input to prevent SQL injection, XSS, and other vulnerabilities.
-- Use parameterized queries where applicable and encrypt sensitive data at rest and in transit.
-- Always handle sensitive information, such as API keys and passwords, securely in configuration files.
-
----
 
 ## Future Automation
 
-In the future, during the **Setup CI/CD Workflows** milestone, the following automation will be implemented:
+We plan to automate code style enforcement by introducing IDE configuration files such as `.editorconfig` and incorporating code analysis tools into our CI/CD pipelines.
 
-1. **Linter Configurations**: 
-    - We will add configuration files for linters (e.g., StyleCop, .NET Analyzers) and IDEs (Visual Studio 2022, Rider, Visual Studio Code).
-    - Contributors will be able to install these configurations into their IDEs to automatically apply the conventions described here.
+## Use of Linters and Tools
 
-2. **GitHub Workflow Integration**:
-    - Automated validation for commits and pull requests will be integrated, ensuring adherence to the naming, formatting, and style rules outlined here.
-    - This will include:
-        - Automated linting using StyleCop and .NET Analyzers.
-        - Automatic validation of commit message formats.
-        - Pull request validation to ensure all tests pass and the code meets the required conventions.
+To help enforce these conventions, we recommend using the following tools:
+
+- **EditorConfig**: Place an `.editorconfig` file at the root of the repository to define coding styles.
+- **StyleCop Analyzers**: Integrate StyleCop into the project to provide real-time feedback on code style violations.
+- **ReSharper**: Use ReSharper for additional code analysis and refactoring support.
 
 ---
 
-## Conclusion
-
-This document outlines all current coding conventions to be followed manually. In the future, automatic linter configuration and GitHub workflows will be implemented to enforce these rules. For now, contributors must adhere to these conventions and best practices manually until the milestone is reached.
+By following these conventions, we ensure that our codebase remains clean, consistent, and maintainable.

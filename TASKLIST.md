@@ -6,8 +6,8 @@ For a high-level overview of the project's key goals and timeline, please refer 
 
 ### Repository Structure
 Tasks in this project are distributed across different repositories depending on their focus:
-- **Project Documentation** and related files: [DotNetExtensions/OAuth20.Project](https://github.com/DotNetExtensions/OAuth20.Project)
-- **Core Libraries** and OAuth 2.0 components: [DotNetExtensions/OAuth20](https://github.com/DotNetExtensions/OAuth20)
+- **Project Documentation** and related files: [DotNetExtensions/OAuth20](https://github.com/DotNetExtensions/OAuth20)
+- **Core Libraries** and OAuth 2.0 components: [DotNetExtensions/OAuth20.Server](https://github.com/DotNetExtensions/OAuth20.Server)
 - **Hosted Authorization Server** and related infrastructure: [DotNetExtensions/OAuth20.Server.Host](https://github.com/DotNetExtensions/OAuth20.Server.Host)
 
 Please explore the full set of project repositories here: [DotNetExtensions GitHub Repositories](https://github.com/orgs/DotNetExtensions/repositories).
@@ -45,7 +45,7 @@ Each task will be addressed within the appropriate repository, ensuring clear se
 | 6   | 1.14          | 14          | Add PULL_REQUEST_TEMPLATE.md File                | P1       | XS   | 2                | Low        |
 | 7   | 1.15          | 15          | Add Repository Settings JSON File                | P2       | XS   | 2                | Low        |
 | 8   | 1.16          | 16          | Create and Initialize DotNetExtensions Repository| P0       | S    | 4                | Medium     |
-| 9   | 1.17          | 17          | Update Links in Other Repositories               | P1       | S    | 3                | Low        |
+| 9   | 1.17          | 17          | Synchronize Data Across Repositories             | P1       | S    | 3                | Low        |
 | 10  | 1.18          | 18          | Retrospective (Sprint 1)                         | P0       | S    | 4                | None       |
 
 ---

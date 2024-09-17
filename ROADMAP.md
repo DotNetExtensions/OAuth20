@@ -2,6 +2,12 @@
 
 The following roadmap outlines the key milestones for the [DotNetExtensions.OAuth20 project](https://github.com/orgs/DotNetExtensions/projects/17). Each milestone represents a significant development phase, including start and end dates for easy tracking.
 
+### Repository Structure
+Tasks in this project are distributed across different repositories depending on their focus:
+- **Project Documentation** and related files: [DotNetExtensions/OAuth20](https://github.com/DotNetExtensions/OAuth20)
+- **Core Libraries** and OAuth 2.0 components: [DotNetExtensions/OAuth20.Server](https://github.com/DotNetExtensions/OAuth20.Server)
+- **Hosted Authorization Server** and related infrastructure: [DotNetExtensions/OAuth20.Server.Host](https://github.com/DotNetExtensions/OAuth20.Server.Host)
+
 This roadmap will be updated regularly to reflect progress as milestones are completed.
 
 ## Milestones
