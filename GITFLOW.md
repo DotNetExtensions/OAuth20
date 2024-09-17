@@ -1,120 +1,255 @@
-# GitFlow Branching Strategy for DotNetExtensions.OAuth20
+# GitFlow Workflow for DotNetExtensions.OAuth20
 
-This document outlines the GitFlow branching strategy we use for managing our development and release processes. GitFlow helps us manage feature development, bug fixes, and releases in a clean, organized manner.
+This document outlines the GitFlow branching strategy used in the DotNetExtensions.OAuth20 project. Adhering to this workflow ensures consistent and organized code management across the project.
 
-## Main Branches
+## Table of Contents
 
-1. **main**: This branch contains the latest stable release. All production-ready code is merged here.
-   - All releases are tagged in this branch.
-   - Only `release/*` or `hotfix/*` branches are merged into `main`.
-   - **Protected Branch**: Merges to `main` can only be done through approved pull requests after passing tests and code reviews.
+- [Overview](#overview)
+- [Visual Diagram](#visual-diagram)
+- [Branch Types](#branch-types)
+  - [Main Branch](#main-branch)
+  - [Develop Branch](#develop-branch)
+  - [Feature Branches](#feature-branches)
+  - [Bugfix Branches](#bugfix-branches)
+  - [Hotfix Branches](#hotfix-branches)
+  - [Release Branches](#release-branches)
+- [Quick Reference Guide](#quick-reference-guide)
+- [Branch Naming Conventions](#branch-naming-conventions)
+- [Protected Branch Policies](#protected-branch-policies)
+- [Workflow Steps](#workflow-steps)
+  - [Creating a Feature Branch](#creating-a-feature-branch)
+  - [Merging a Feature Branch](#merging-a-feature-branch)
+  - [Creating a Hotfix Branch](#creating-a-hotfix-branch)
+  - [Merging a Hotfix Branch](#merging-a-hotfix-branch)
+- [Common Pitfalls and How to Avoid Them](#common-pitfalls-and-how-to-avoid-them)
+- [References](#references)
 
-2. **develop**: This branch contains the latest ongoing development. All feature, bugfix, and hotfix branches are merged here.
-   - This branch serves as an integration branch for features and bug fixes.
-   - It is the basis for the next release.
-   - Only `feature/*`, `bugfix/*`, `release/*`, and `hotfix/*` branches are merged into `develop`.
-   - **Protected Branch**: Merges to `develop` can only be done through approved pull requests after passing tests and code reviews.
+---
 
-## Supporting Branches
+## Overview
 
-Supporting branches help parallelize development. These branches are short-lived and only exist until their work is complete and merged back into `develop` or `main`.
+GitFlow is a branching model that provides a robust framework for managing larger projects. It defines a strict branching model designed around the project release. This document explains how we implement GitFlow in the DotNetExtensions.OAuth20 project.
 
-1. **feature/***: These branches are used for developing new features.
-   - Start from `develop`.
-   - Merge into `develop` when the feature is complete and tested.
-   - Branch naming convention: `feature/feature-name`
-   - Example: `feature/user-authentication`
+## Visual Diagram
 
-2. **bugfix/***: These branches are used to fix bugs that are not critical for immediate production.
-   - Start from `develop`.
-   - Merge into `develop` when the bug is fixed.
-   - Branch naming convention: `bugfix/bug-description`
-   - Example: `bugfix/fix-login-error`
+<img src="./assets/atlassian-gitflow-diagram.svg" width="768">
 
-3. **release/***: These branches are used to prepare a new release.
-   - Start from `develop` when the develop branch is feature-complete for the next release.
-   - Merge into both `main` and `develop` once testing and documentation are complete.
-   - Branch naming convention: `release/release-version`
-   - Example: `release/1.0.0`
+<!-- ![GitFlow Diagram](./assets/atlassian-gitflow-diagram.svg) -->
 
-4. **hotfix/***: These branches are used for urgent fixes in production.
-   - Start from `main` when a critical bug in production needs to be resolved immediately.
-   - Merge into both `main` and `develop` after the fix is complete.
-   - Branch naming convention: `hotfix/hotfix-description`
-   - Example: `hotfix/fix-critical-issue`
+*Figure 1: GitFlow Branching Model (taken from [Atlassian GitFlow Workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow))*
 
-## Workflow
+## Branch Types
 
-### Feature Workflow
+### Main Branch
 
-1. Create a new branch from `develop` for the feature you are working on:
-   ```bash
-   git checkout -b feature/your-feature develop
-   ```
-2. Once the feature is complete, submit a pull request (PR) for review.
-3. After review and approval, the feature branch is merged into `develop`.
+- **Branch Name:** `main`
+- **Purpose:** Contains production-ready code.
+- **Protected:** Yes
 
-### Bugfix Workflow
+### Develop Branch
 
-1. Create a new branch from `develop` for the bugfix:
-   ```bash
-   git checkout -b bugfix/bug-description develop
-   ```
-2. After fixing the bug, submit a pull request (PR) for review.
-3. The bugfix branch is merged back into `develop`.
+- **Branch Name:** `develop`
+- **Purpose:** Integrates features for the upcoming release.
+- **Protected:** Yes
 
-### Release Workflow
+### Feature Branches
 
-1. When the `develop` branch is ready for release, create a release branch:
-   ```bash
-   git checkout -b release/version-number develop
-   ```
-2. Perform final testing and documentation on the release branch.
-3. After everything is verified, open **Pull Requests** (PRs) to merge the release branch into both `main` and `develop`.
-   - Ensure the PRs pass all automated tests and receive the necessary approvals before merging.
-   - Merges into both `main` and `develop` are only done through PRs on GitHub to ensure proper review and traceability.
+- **Prefix:** `feature/`
+- **Purpose:** Used to develop new features for the upcoming release.
+- **Base Branch:** `develop`
 
-4. Tag the release in `main`:
-   ```bash
-   git tag -a v1.0.0 -m "Release version 1.0.0"
-   git push origin v1.0.0
-   ```
+### Bugfix Branches
 
-### Hotfix Workflow
+- **Prefix:** `bugfix/`
+- **Purpose:** Used to fix non-critical bugs identified during the current release cycle.
+- **Base Branch:** `develop`
 
-1. If a critical issue is discovered in production, create a hotfix branch from `main`:
-   ```bash
-   git checkout -b hotfix/fix-description main
-   ```
-2. Once the fix is complete, open **Pull Requests** to merge the hotfix into both `main` and `develop`.
-   - As with releases, use PRs to ensure code reviews and tests are passed before merging.
+### Hotfix Branches
 
-3. Tag the hotfix release:
-   ```bash
-   git tag -a v1.0.1 -m "Hotfix version 1.0.1"
-   git push origin v1.0.1
-   ```
+- **Prefix:** `hotfix/`
+- **Purpose:** Used to fix critical issues in the production code.
+- **Base Branch:** `main`
 
-## Merging Strategy
+### Release Branches
 
-- **Feature and bugfix branches** are merged into `develop` via pull requests.
-- **Release branches** are merged into both `main` and `develop` via pull requests.
-- **Hotfix branches** are merged into both `main` and `develop` via pull requests.
-- Ensure all branches are rebased or updated from the latest `develop` or `main` before merging.
-- **Protected Branches**: Merges into `main` and `develop` are only allowed via pull requests that pass code reviews and automated tests.
+- **Prefix:** `release/`
+- **Purpose:** Prepare for a new production release.
+- **Base Branch:** `develop`
 
-## Conclusion
+## Quick Reference Guide
 
-By following this GitFlow strategy, we ensure that development stays organized, releases are handled methodically, and production code remains stable. This approach allows contributors to work in parallel while minimizing the risk of conflicts and issues in production.
+| Branch Type     | Prefix       | Base Branch | Merge Into     | Purpose                          |
+|-----------------|--------------|-------------|----------------|----------------------------------|
+| Main            | `main`       | N/A         | N/A            | Production-ready code            |
+| Develop         | `develop`    | `main`      | N/A            | Integration of features          |
+| Feature         | `feature/`   | `develop`   | `develop`      | New feature development          |
+| Bugfix          | `bugfix/`    | `develop`   | `develop`      | Non-critical bug fixes           |
+| Hotfix          | `hotfix/`    | `main`      | `main`, `develop` | Critical fixes in production     |
+| Release         | `release/`   | `develop`   | `develop`, `main` | Release preparation             |
 
-## Additional Considerations
+## Branch Naming Conventions
 
-- **Rebasing**: Before submitting a pull request, always ensure your branch is up-to-date with the latest `develop` branch by rebasing it:
+- **Feature Branches:**
+
+  ```bash
+  git checkout -b feature/feature-name develop
+  ```
+
+- **Bugfix Branches:**
+
+  ```bash
+  git checkout -b bugfix/bugfix-name develop
+  ```
+
+- **Hotfix Branches:**
+
+  ```bash
+  git checkout -b hotfix/hotfix-name main
+  ```
+
+- **Release Branches:**
+
+  ```bash
+  git checkout -b release/version-number develop
+  ```
+
+Branch names should be descriptive and use lowercase letters with hyphens to separate words.
+
+## Protected Branch Policies
+
+The following branches are protected to prevent direct pushes and require pull requests for merging:
+
+- `main`
+- `develop`
+
+**Protection Rules:**
+
+- **Pull Request Reviews:** At least one approval is required.
+- **Status Checks:** All CI checks must pass before merging.
+- **No Force Pushes:** Force pushes are not allowed.
+- **No Deletions:** Deleting these branches is prohibited.
+
+Exceptions to these policies can only be made by project maintainers in exceptional circumstances.
+
+## Workflow Steps
+
+### Creating a Feature Branch
+
+1. **Update `develop` Branch:**
+
    ```bash
    git checkout develop
    git pull origin develop
-   git checkout feature/your-feature
-   git rebase develop
    ```
 
-- **Tagging Releases**: Make sure to tag all releases in `main` with the appropriate version number. This helps track and identify releases easily.
+2. **Create Feature Branch:**
+
+   ```bash
+   git checkout -b feature/your-feature-name develop
+   ```
+
+3. **Develop Your Feature:**
+
+   - Commit changes following the commit message conventions.
+
+4. **Push Feature Branch to Remote:**
+
+   ```bash
+   git push origin feature/your-feature-name
+   ```
+
+### Merging a Feature Branch
+
+1. **Create a Pull Request:**
+
+   - Target Branch: `develop`
+   - Ensure all CI checks pass.
+   - Get at least one approval.
+
+2. **Merge the Pull Request:**
+
+   - Use "Squash and Merge" to maintain a clean history.
+
+3. **Delete the Feature Branch:**
+
+   - After merging, delete the feature branch from remote.
+
+### Creating a Hotfix Branch
+
+1. **Update `main` Branch:**
+
+   ```bash
+   git checkout main
+   git pull origin main
+   ```
+
+2. **Create Hotfix Branch:**
+
+   ```bash
+   git checkout -b hotfix/your-hotfix-name main
+   ```
+
+3. **Fix the Issue:**
+
+   - Commit changes with appropriate messages.
+
+4. **Push Hotfix Branch to Remote:**
+
+   ```bash
+   git push origin hotfix/your-hotfix-name
+   ```
+
+### Merging a Hotfix Branch
+
+1. **Create Pull Requests:**
+
+   - Target Branches: `main` and `develop`
+   - Ensure all CI checks pass.
+   - Get necessary approvals.
+
+2. **Merge the Pull Requests:**
+
+   - Merge into `main` first, then into `develop`.
+
+3. **Tag the Release (if applicable):**
+
+   ```bash
+   git checkout main
+   git pull origin main
+   git tag -a vX.X.X -m "Release version X.X.X"
+   git push origin vX.X.X
+   ```
+
+## Common Pitfalls and How to Avoid Them
+
+- **Forgetting to Pull Latest Changes:**
+
+  - *Issue:* Conflicts may occur if you don't have the latest code.
+  - *Solution:* Always pull the latest changes before creating a new branch.
+
+- **Incorrect Base Branch:**
+
+  - *Issue:* Branching from the wrong base can cause integration issues.
+  - *Solution:* Verify you're on the correct base branch (`develop` or `main`) before creating a new branch.
+
+- **Not Following Naming Conventions:**
+
+  - *Issue:* Inconsistent branch names make tracking difficult.
+  - *Solution:* Adhere strictly to the naming conventions outlined above.
+
+- **Directly Pushing to Protected Branches:**
+
+  - *Issue:* This action is blocked and may cause delays.
+  - *Solution:* Always create a pull request for merging into protected branches.
+
+## References
+
+- [Atlassian GitFlow Workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow)
+- [Semantic Versioning](https://semver.org/)
+- [Contributing Guidelines](./CONTRIBUTING.md)
+- [Conventions](./CONVENTIONS.md)
+
+---
+
+By following this GitFlow workflow, we maintain a clean and organized codebase that facilitates collaboration and efficient development.
+
