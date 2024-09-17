@@ -181,15 +181,15 @@ This project is divided into the following repositories:
 
 ## Development Workflow
 
-We follow the GitFlow branching strategy for managing our development and release processes. For detailed information, please refer to our [GitFlow Guide](./GITFLOW.md).
+We follow the GitFlow branching strategy for managing our development and release processes. For detailed information, please refer to our [GitFlow Guide](https://github.com/DotNetExtensions/OAuth20/blob/main/GITFLOW.md).
 
 ## Roadmap
 
-To understand our future plans and milestones, please refer to our [Roadmap](./ROADMAP.md).
+To understand our future plans and milestones, please refer to our [Roadmap](https://github.com/DotNetExtensions/OAuth20/blob/main/ROADMAP.md).
 
 ## Task List
 
-For a detailed breakdown of ongoing and upcoming tasks, please refer to our [Task List](./TASKLIST.md).
+For a detailed breakdown of ongoing and upcoming tasks, please refer to our [Task List](https://github.com/DotNetExtensions/OAuth20/blob/main/TASKLIST.md).
 
 ## Community and Support
 
@@ -202,19 +202,19 @@ For discussions, support, and feedback, please visit:
 
 ## Contributing
 
-We welcome contributions! Please read our [Contributing Guidelines](./CONTRIBUTING.md) to get started.
+We welcome contributions! Please read our [Contributing Guidelines](https://github.com/DotNetExtensions/OAuth20/blob/main/CONTRIBUTING.md) to get started.
 
-For detailed information on coding, formatting, and contribution conventions, please refer to our [Conventions](./CONVENTIONS.md) file.
+For detailed information on coding, formatting, and contribution conventions, please refer to our [Conventions](https://github.com/DotNetExtensions/OAuth20/blob/main/CONVENTIONS.md) file.
 
-Please note that all contributions are expected to adhere to our [Code of Conduct](./CODE_OF_CONDUCT.md).
+Please note that all contributions are expected to adhere to our [Code of Conduct](https://github.com/DotNetExtensions/OAuth20/blob/main/CODE_OF_CONDUCT.md).
 
 ## Security
 
-We take the security of our project seriously. If you discover any security vulnerabilities, please report them by following the instructions in our [Security Policy](./SECURITY.md).
+We take the security of our project seriously. If you discover any security vulnerabilities, please report them by following the instructions in our [Security Policy](https://github.com/DotNetExtensions/OAuth20/blob/main/SECURITY.md).
 
 ## License
 
-This project is licensed under the [MIT License](./LICENSE).
+This project is licensed under the [MIT License](https://github.com/DotNetExtensions/OAuth20/blob/main/LICENSE).
 
 ## References
 
