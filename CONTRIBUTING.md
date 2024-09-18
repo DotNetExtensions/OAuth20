@@ -92,7 +92,6 @@ We welcome contributions to our documentation and project files, including corre
 
 For detailed information on branching strategies (e.g., `feature/`, `bugfix/`, `hotfix/`), please refer to the [GITFLOW.md](./GITFLOW.md).
 
-
 #### Commit Messages
 
 - Use **sentence case** for commit messages (start with a capital letter, avoid periods).
