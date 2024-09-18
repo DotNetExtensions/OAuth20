@@ -7,6 +7,10 @@
 
 DotNetExtensions.OAuth20 is a modular, cross-platform solution designed to implement OAuth 2.0 authorization flows in .NET applications. This project offers reusable libraries for core OAuth 2.0 functionalities and a fully hosted ASP.NET Core web application, making it easy to deploy and integrate secure authorization services across various environments.
 
+<img src="./assets/oauth20-flow.gif" width="768">
+
+*Figure 1: OAuth 2.0 [Protocol Flow](https://datatracker.ietf.org/doc/html/rfc6749#section-1.2) (taken from [dev.to article (authored by "Hem")](https://dev.to/hem/oauth-2-0-flows-explained-in-gifs-2o7a))*
+
 ## Table of Contents
 
 - [Project Overview](#project-overview)
@@ -163,7 +167,7 @@ This project includes several demo projects within the Library Repository to hel
 
 This project is divided into the following repositories:
 
-- **Project Repository:** [DotNetExtensions/OAuth20](https://github.com/DotNetExtensions/OAuth20)
+- **Project Repository:** [DotNetExtensions/OAuth20](https://github.com/DotNetExtensions/OAuth20) (Current Repository)
   - Essential Project Documentation
 
 - **Library Repository:** [DotNetExtensions/OAuth20.Server](https://github.com/DotNetExtensions/OAuth20.Server)
